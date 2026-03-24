@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #222;
+}
+
+#game-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 32px;
+    margin: 30px 0;
+    font-weight: bold;
+}
+
+#options {
+    margin-bottom: 20px;
+}
+
+.option {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    background: #4CAF50;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.option:hover {
+    transform: scale(1.1);
+    background: #45a049;
+}
+
+.correct {
+    background: green !important;
+}
+
+.wrong {
+    background: red !important;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #ff9800;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e68900;
+}
