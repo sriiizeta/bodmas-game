@@ -9,17 +9,24 @@
 
 <h1>BODMAS Game 🎮</h1>
 
-<div id="game-info">
-    <div>Level: <span id="level">1</span></div>
-    <div>Score: <span id="score">0</span></div>
-    <div>Time: <span id="timer">30</span>s</div>
+<!-- Difficulty Selection -->
+<div id="difficulty-screen">
+    <h2>Select Difficulty</h2>
+    <button onclick="setDifficulty('easy')">Easy</button>
+    <button onclick="setDifficulty('medium')">Medium</button>
+    <button onclick="setDifficulty('hard')">Hard</button>
 </div>
 
-<div id="question">Click Start</div>
+<!-- Game Area -->
+<div id="game" style="display:none;">
+    <div id="game-info">
+        <div>Score: <span id="score">0</span></div>
+        <div>Time: <span id="timer">30</span>s</div>
+    </div>
 
-<div id="options"></div>
-
-<button id="startBtn">Start Game</button>
+    <div id="question"></div>
+    <div id="options"></div>
+</div>
 
 <script src="script.js"></script>
 
