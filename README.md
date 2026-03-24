@@ -15,7 +15,7 @@ An interactive web-based game designed to help students understand and practice 
 - JavaScript  
 
 ## 🌐 Live Demo
-https://your-vercel-link.vercel.app
+https://bodmas-game-rosy.vercel.app/
 
 ## 📂 How to Run Locally
 1. Download or clone the repository  
