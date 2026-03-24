@@ -1,15 +1,21 @@
-let level = 1;
 let score = 0;
 let timeLeft = 30;
 let timer;
 let correctAnswer = 0;
+let difficulty = "";
 
-// Start button
-document.getElementById("startBtn").addEventListener("click", startGame);
+// Set difficulty
+function setDifficulty(level) {
+    difficulty = level;
+
+    document.getElementById("difficulty-screen").style.display = "none";
+    document.getElementById("game").style.display = "block";
+
+    startGame();
+}
 
 // Start game
 function startGame() {
-    level = 1;
     score = 0;
     timeLeft = 30;
 
@@ -26,43 +32,60 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
-            alert("Game Over! Your score: " + score);
+            alert("Game Over! Score: " + score);
         }
 
         updateUI();
     }, 1000);
 }
 
-// Generate question based on level
+// Generate question
 function generateQuestion() {
 
-    let a, b, c, question;
+    let a = rand(1, 10);
+    let b = rand(1, 10);
+    let c = rand(1, 10);
+    let question = "";
 
-    if (level === 1) {
-        a = rand(1, 10);
-        b = rand(1, 10);
-        c = rand(1, 10);
+    // EASY: + - *
+    if (difficulty === "easy") {
+        let ops = ["+", "-", "*"];
+        let op = ops[rand(0, 2)];
 
-        question = `${a} + ${b} × ${c}`;
-        correctAnswer = a + (b * c);
+        question = `${a} ${op} ${b}`;
+        correctAnswer = eval(question);
     }
 
-    else if (level === 2) {
-        a = rand(5, 20);
-        b = rand(1, 10);
-        c = rand(1, 10);
+    // MEDIUM: + - * / (clean division)
+    else if (difficulty === "medium") {
+        let ops = ["+", "-", "*", "/"];
+        let op1 = ops[rand(0, 3)];
+        let op2 = ops[rand(0, 3)];
 
-        question = `${a} - ${b} × ${c}`;
-        correctAnswer = a - (b * c);
+        // Ensure clean division
+        if (op1 === "/") {
+            b = rand(1, 10);
+            a = b * rand(1, 10);
+        }
+
+        if (op2 === "/") {
+            c = rand(1, 10);
+            b = c * rand(1, 10);
+        }
+
+        question = `${a} ${op1.replace("/", "÷")} ${b} ${op2.replace("/", "÷")} ${c}`;
+        correctAnswer = eval(`${a} ${op1} ${b} ${op2} ${c}`);
     }
 
+    // HARD: (), powers, /, + - *
     else {
-        a = rand(1, 10);
-        b = rand(1, 10);
-        c = rand(1, 10);
+        let power = rand(2, 3);
 
-        question = `(${a} + ${b}) × ${c}`;
-        correctAnswer = (a + b) * c;
+        let divisor = rand(1, 5);
+        let base = divisor * rand(1, 5); // ensures clean division
+
+        question = `(${a} + ${b}) × ${c} + ${base} ÷ ${divisor} + ${a}^${power}`;
+        correctAnswer = (a + b) * c + (base / divisor) + Math.pow(a, power);
     }
 
     document.getElementById("question").innerText = question;
@@ -102,14 +125,7 @@ function checkAnswer(selected, btn) {
     if (selected === correctAnswer) {
         btn.classList.add("correct");
         score += 10;
-
-        // Level up every 50 points
-        if (score % 50 === 0) {
-            level++;
-        }
-
         setTimeout(generateQuestion, 500);
-
     } else {
         btn.classList.add("wrong");
         score -= 5;
@@ -121,11 +137,10 @@ function checkAnswer(selected, btn) {
 // Update UI
 function updateUI() {
     document.getElementById("score").innerText = score;
-    document.getElementById("level").innerText = level;
     document.getElementById("timer").innerText = timeLeft;
 }
 
-// Utility functions
+// Helpers
 function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
